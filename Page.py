@@ -230,7 +230,6 @@ class PreviewPage:
             date = headers_str[headers_str.index('Date:') + 1]
         # team
         teams_a = soup.find_all(name='a', class_=re.compile('team-link.*'))
-        print(len(teams_a))
         if len(teams_a) >= 2:
             team_home = (teams_a[0].string.strip(), teams_a[0]['href'])
             team_away = (teams_a[1].string.strip(), teams_a[1]['href'])

@@ -182,7 +182,6 @@ def write_predictions(news, team, info, c):
 def write_preview_info(info, db_path):
     db = sqlite3.connect(db_path)
     c = db.cursor()
-    print(info)
     d = c.execute('SELECT rowid FROM previews WHERE date=? AND time=? AND home=? AND away=?',
                   (info['date'], info['time'], info['team_home'][0], info['team_away'][0])).fetchall()
 
