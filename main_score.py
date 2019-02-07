@@ -9,7 +9,7 @@ if __name__ == '__main__':
         while True:
             print('Downloading score pages ...')
             pages = Downloader.score_pages()
-            print('\tdone !!!\nProcessing ' + len(pages) + ' score pages ...')
+            print('\tdone !!!\nProcessing ' + str(len(pages)) + ' score pages ...')
             for n_page, page in enumerate(pages):
                 score_page = Page.ScorePage(page)
                 score_page.fetch_scores()
