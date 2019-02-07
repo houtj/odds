@@ -26,9 +26,10 @@ if __name__ == '__main__':
                         page = Downloader.odds_page(league_id[league])
                     except urllib.error.HTTPError as err:
                         if connecting_time < 10:
-                            print(str('\t'+connecting_time) + 'th connection error '+str(err.code) +
+                            print('\t' + str(connecting_time) + ' th connection error '+str(err.code) +
                                   '. Wait for 20s to retry ...')
                             time.sleep(20)
+                            continue
                         if connecting_time == 10:
                             Downloader.send_email('Odd_1 page download error!!!', traceback.format_exc())
                             raise

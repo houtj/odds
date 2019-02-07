@@ -76,6 +76,7 @@ def leagues_page():
 # Save web page as string using selenium
 def previews_page(url):
     driver = webdriver.Chrome()
+    driver.implicitly_wait(60)
     driver.get(url)
     page = driver.page_source
     driver.close()

@@ -6,6 +6,7 @@ import time
 from pyvirtualdisplay import Display
 import locale
 import traceback
+from selenium.common.exceptions import TimeoutException
 
 
 # download previews page, extract the urls for each match preview
@@ -44,9 +45,23 @@ if __name__ == '__main__':
                     continue
                 # add data to the database
                 else:
-                    print('Downloading match preview information from '+url[0])
-                    page = Downloader.previews_page('https://www.whoscored.com'+url[0])
-                    print('\tdone !!! Adding preview information to database ...')
+                    print('Downloading match preview information from ' + url[0])
+                    connecting_time = 0
+                    while True:
+                        try:
+                            connecting_time += 1
+                            page = Downloader.previews_page('https://www.whoscored.com'+url[0])
+                        except TimeoutError:
+                            if connecting_time < 10:
+                                print('\t' + str(connecting_time) + ' th connection error. Wait for 5 min to retry ...')
+                                time.sleep(300)
+                                continue
+                            if connecting_time == 10:
+                                Downloader.send_email('Preview page download error!!!', traceback.format_exc())
+                                raise
+                        else:
+                            print('\tdone !!! Adding preview information to database ...')
+                            break
                     match_statistics = pp.fetch_preview_info(url[1], page, url[0])
                     Database.write_preview_info(match_statistics, 'odds.db')
                     print('\tdone !!!')
