@@ -45,7 +45,7 @@ if __name__ == '__main__':
                 # add data to the database
                 else:
                     print('Downloading match preview information from '+url[0])
-                    page = Downloader.previews_page('https://www.whoscored.com ... '+url[0])
+                    page = Downloader.previews_page('https://www.whoscored.com'+url[0])
                     print('\tdone !!! Adding preview information to database ...')
                     match_statistics = pp.fetch_preview_info(url[1], page, url[0])
                     Database.write_preview_info(match_statistics, 'odds.db')
