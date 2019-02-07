@@ -233,3 +233,9 @@ def write_preview_info(info, db_path):
         write_predictions(info['predictions'], 'predictions', info, c)
     db.commit()
     db.close()
+
+
+# create database
+if __name__ == '__main__':
+    create_db('odds.db')
+    print('Database created successfully!\n')

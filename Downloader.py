@@ -2,6 +2,10 @@ import urllib.parse
 import urllib.request
 import time
 from selenium import webdriver
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import ssl
 
 
 # Save bwin page as string
@@ -78,9 +82,28 @@ def previews_page(url):
     return page
 
 
-if __name__ == '__main__':
-    page = previews_page()
-    with open('previews.html', 'w', encoding='utf8') as f:
-        f.write(page)
+# Send email
+def send_email(title, text):
+    smtp_server = 'smtp.office365.com'
+    port = 587
+    passwd = 'APoToXin-4869yx'
+    sender = 'houtj@live.cn'
+    receiver = 'houtj@live.cn'
 
+    message = MIMEMultipart('alternative')
+    message['Subject'] = title
+    message['From'] = sender
+    message['To'] = receiver
+    message.attach(MIMEText(text, 'plain'))
+
+    context = ssl.create_default_context()
+    server = smtplib.SMTP(smtp_server, port)
+    server.starttls(context=context)
+    server.login(sender, passwd)
+    server.sendmail(sender, receiver, message.as_string())
+
+
+# test
+if __name__ == '__main__':
+    send_email('test', 'This is a test')
 

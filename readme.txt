@@ -7,7 +7,8 @@ Version 1.1
 Scratching match fact data
 
 Version 1.2
-Sending email when error occurs
+1. Database.py add main function to create database, remove database creation in other files
+2. Sending email when error occurs
 
 Version 1.3
 Primary analysis of the data
