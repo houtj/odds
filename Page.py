@@ -345,28 +345,31 @@ class PreviewPage:
                 player_dic['position'] = 'midfielder'
             players_away.append(player_dic)
         # missing players
-        mis_players_div = soup.find(name='div', attrs={'id': 'missing-players', 'class': 'two-cols'}).find_all(
-            name='tbody')
-        if len(mis_players_div) >= 2:
-            players_url = []
-            for player_a in mis_players_div[0].find_all(name='a'):
-                players_url.append(player_a['href'])
-            for n, player_tr in enumerate(mis_players_div[0].find_all(name='tr')):
-                player_list = list(player_tr.stripped_strings)
-                if len(player_list) == 3:
-                    player_dic = {'name': player_list[0], 'rating': player_list[2], 'url': players_url[n],
-                                  'position': 'missing'}
-                    mis_players_home.append(player_dic)
-
-            players_url = []
-            for player_a in mis_players_div[1].find_all(name='a'):
-                players_url.append(player_a['href'])
-            for n, player_tr in enumerate(mis_players_div[1].find_all(name='tr')):
-                player_list = list(player_tr.stripped_strings)
-                if len(player_list) == 3:
-                    player_dic = {'name': player_list[0], 'rating': player_list[2], 'url': players_url[n],
-                                  'position': 'missing'}
-                    mis_players_away.append(player_dic)
+        mis_players_wrapper = soup.find(name='div', attrs={'id': 'missing-players', 'class': 'two-cols'})
+        if mis_players_wrapper:
+            mis_players_div = mis_players_wrapper.find_all(name='tbody')
+            if len(mis_players_div) >= 2:
+                players_url = []
+                for player_a in mis_players_div[0].find_all(name='a'):
+                    players_url.append(player_a['href'])
+                for n, player_tr in enumerate(mis_players_div[0].find_all(name='tr')):
+                    player_list = list(player_tr.stripped_strings)
+                    if len(player_list) == 3:
+                        player_dic = {'name': player_list[0], 'rating': player_list[2], 'url': players_url[n],
+                                      'position': 'missing'}
+                        mis_players_home.append(player_dic)
+                players_url = []
+                for player_a in mis_players_div[1].find_all(name='a'):
+                    players_url.append(player_a['href'])
+                for n, player_tr in enumerate(mis_players_div[1].find_all(name='tr')):
+                    player_list = list(player_tr.stripped_strings)
+                    if len(player_list) == 3:
+                        player_dic = {'name': player_list[0], 'rating': player_list[2], 'url': players_url[n],
+                                      'position': 'missing'}
+                        mis_players_away.append(player_dic)
+        else:
+            mis_players_home = []
+            mis_players_away = []
         # news
         news_div = soup.find(name='div', attrs={'id': 'preview-team-news', 'class': 'two-cols'})
         news_ul = news_div.find_all(name='ul', class_='items')
