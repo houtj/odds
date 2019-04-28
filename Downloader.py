@@ -87,9 +87,9 @@ def previews_page(url):
 def send_email(title, text):
     smtp_server = 'smtp.office365.com'
     port = 587
-    passwd = 'APoToXin-4869yx'
-    sender = 'houtj@live.cn'
-    receiver = 'houtj@live.cn'
+    passwd = ''
+    sender = ''
+    receiver = ''
 
     message = MIMEMultipart('alternative')
     message['Subject'] = title
